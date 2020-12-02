@@ -1,0 +1,41 @@
+FROM tensorflow/tensorflow:1.4.0
+
+RUN apt-get update -y && apt-get install -y openssh-server && apt-get install vim -y && apt-get install sudo
+
+RUN useradd -ms /bin/bash testuser
+
+RUN echo "testuser ALL=NOPASSWD: ALL" >> /etc/sudoers
+
+RUN echo 'root:ehost1509' |chpasswd
+
+RUN echo 'testuser:ehost' |chpasswd
+
+RUN chmod 4750 /bin/su 
+
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+RUN sed -ri 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN echo "UseLogin yes" >> /etc/ssh/sshd_config
+
+RUN echo "Port 22" >> /etc/ssh/sshd_config
+
+RUN echo "StrictModes yes" >> /etc/ssh/sshd_config
+
+EXPOSE 22
+
+RUN mkdir -p /var/run/sshd
+
+ADD . /var/run/sshd
+
+WORKDIR /var/run/sshd
+
+RUN chmod 755 ss.sh
+
+RUN rm Dockerfile
+
+CMD ["/bin/bash", "./ss.sh"]
