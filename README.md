@@ -1,6 +1,6 @@
 Docker - 응용 프로그램을 실행시키기 위한 요소들을 컨테이너라는 요소로 묶어 가상화 하는 툴
-
-
+#
+#
 1. Docker 작동 방식
   Dockerfile -[docker build <옵션>]-> image -[docker run <옵션>]-> container
   
