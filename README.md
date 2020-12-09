@@ -12,15 +12,15 @@
 #   
   3) image
     : 서비스 운영에 필요한 서버 프로그램, 소스코드, 컴파일 된 실행 파일을 묶은 형태
-  
+#  
   4) docker run <옵션>
     : image를 컨테이너로 실행시키기 위한 명령어
-    
+#    
   5) container
     : image를 실행한 상태
     : 격리된 공간에서 프로세스가 동작하는 기술
-    
-2. Dockerfile 명령어
+#    
+## 2. Dockerfile 명령어
   1) FROM : base image를 지정
     # FROM ubuntu:18.04
   2) RUN : Shell script 또는 명령을 실행
@@ -37,9 +37,9 @@
   7) CMD / ENTRYPOINT : 컨테이너가 무슨 일을 하는지 결정하는 최종 단계를 정의하는 명령
     : ENTRYPOINT = 컨테이너가 시작될 때 호출될 명령어를 정의
     : CMD = ENTRYPOINT에 전잘되는 인자를 정의
-    
+ #
  3. Docker build -t <이미지 이름>:<버전>
   : -t 옵션을 이용하여 이미지 이름 지정 및 버전 관리
- 
+ #
  4. docker run <옵션> <이미지 이름>:<버전>
   : docker run을 이용하여 컨테이너를 생성하기 때문에 run의 옵션을 상황에 따라 잘 사용해주는 게 
