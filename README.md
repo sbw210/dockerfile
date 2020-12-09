@@ -22,21 +22,21 @@
 #    
 ## 2. Dockerfile 명령어
   1) FROM : base image를 지정
-    # FROM ubuntu:18.04
+    >>># FROM ubuntu:18.04
   2) RUN : Shell script 또는 명령을 실행
-    # RUN apt-get install net-tools
+    >>># RUN apt-get install net-tools
   3) WORKDIR : 'RUN', 'CMD', 'ENTRYPOINT' 명령이 실행될 작업 디렉터리 지정
-    # WORKDIR /test
+    >>># WORKDIR /test
   4) ADD : 현재 디렉터리에 있는 파일들을 내부 디렉터리에 추가
-    # WORKDIR <호스트OS 파일 경로> <Docker 컨테이너 안에서의 경로>
+    >>># WORKDIR <호스트OS 파일 경로> <Docker 컨테이너 안에서의 경로>
   5) EXPOSE : 호스트와 연결할 포트 번호 설정
-    # EXPOSE 80
+    >>># EXPOSE 80
   6) ENV / ARG : 환경 변수 설정
-    : ENV = Dockerfile 또는 컨테이너 안에서 환경 변수로 사용 가능
-    : ARG = Dockerfile에서만 사용 가능
+    >>: ENV = Dockerfile 또는 컨테이너 안에서 환경 변수로 사용 가능
+    >>: ARG = Dockerfile에서만 사용 가능
   7) CMD / ENTRYPOINT : 컨테이너가 무슨 일을 하는지 결정하는 최종 단계를 정의하는 명령
-    : ENTRYPOINT = 컨테이너가 시작될 때 호출될 명령어를 정의
-    : CMD = ENTRYPOINT에 전잘되는 인자를 정의
+    >>: ENTRYPOINT = 컨테이너가 시작될 때 호출될 명령어를 정의
+    >>: CMD = ENTRYPOINT에 전잘되는 인자를 정의
  #
  ## 3. Docker build -t <이미지 이름>:<버전>
   : -t 옵션을 이용하여 이미지 이름 지정 및 버전 관리
