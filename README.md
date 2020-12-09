@@ -38,8 +38,8 @@
     : ENTRYPOINT = 컨테이너가 시작될 때 호출될 명령어를 정의
     : CMD = ENTRYPOINT에 전잘되는 인자를 정의
  #
- 3. Docker build -t <이미지 이름>:<버전>
+ ## 3. Docker build -t <이미지 이름>:<버전>
   : -t 옵션을 이용하여 이미지 이름 지정 및 버전 관리
  #
- 4. docker run <옵션> <이미지 이름>:<버전>
+ ## 4. docker run <옵션> <이미지 이름>:<버전>
   : docker run을 이용하여 컨테이너를 생성하기 때문에 run의 옵션을 상황에 따라 잘 사용해주는 게 
