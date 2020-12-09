@@ -3,13 +3,13 @@ Docker - 응용 프로그램을 실행시키기 위한 요소들을 컨테이너
 #
 1. Docker 작동 방식
   Dockerfile -[docker build <옵션>]-> image -[docker run <옵션>]-> container
-  
+#  
   1) Dockerfile
     : 하나의 프로그램을 실행시키기 위한 일련의 과정들을 기록하고 실행 할 수 있는 일종의 스크립트
-    
+#    
   2) docker build <옵션>
     : Dockerfile을 이미지로 만들기 위한 명령어
-   
+#   
   3) image
     : 서비스 운영에 필요한 서버 프로그램, 소스코드, 컴파일 된 실행 파일을 묶은 형태
   
