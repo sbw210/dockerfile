@@ -48,11 +48,6 @@ ADD . /var/run/sshd
 
 WORKDIR /var/run/sshd
 
-RUN chmod 755 apm.sh 
-# cat apm.sh
-# source /etc/apache2/envvars
-# /usr/sbin/apache2
-# /usr/sbin/sshd -D
-# + while문 추가로 apache와 ssh를 종료해도 컨테이너가 종료되지 않도록 설정
+RUN chmod 755 auto.sh 
 
-CMD ["/bin/bash", "./apm.sh"]
+CMD ["/bin/bash", "./auto.sh"]
