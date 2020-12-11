@@ -32,6 +32,30 @@ RUN echo "mysql-server mysql-server/root_password_again password" | debconf-set-
 RUN apt-get install -y mysql-server
 
 
+##SSH install
+RUN apt-get install -y openssh-server && apt-get install vim -y && apt-get install sudo
+
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+
+RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN echo "StrictModes yes" >> /etc/ssh/sshd_config
+
+RUN echo "Port 22" >> /etc/ssh/sshd_config
+
+RUN useradd -ms /bin/bash testuser
+
+RUN echo "testuser ALL=NOPASSWD: ALL" >> /etc/sudoers
+
+RUN echo 'root:p@ssw0rd' |chpasswd
+
+RUN echo 'testuser:test' |chpasswd
+
+RUN chmod 4750 /bin/su
+
+
 ##port open
 EXPOSE 22
 EXPOSE 80
