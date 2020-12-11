@@ -1,19 +1,20 @@
 FROM tensorflow/tensorflow:1.4.0
 
-## ssh install
-RUN apt-get update -y && apt-get install -y openssh-server && apt-get install vim -y && apt-get install sudo
+RUN apt-get update && apt-get install net-tools -y
 
-RUN useradd -ms /bin/bash testuser
 
-RUN echo "testuser ALL=NOPASSWD: ALL" >> /etc/sudoers
+## Jupyter Notebook install
+RUN apt install -y python3-pip
+# pip : 파이썬으로 작성된 패키지 소프트웨어를 관리하는 패키지 관리 시스템으로 python3-pip를 설치해줘야 함
 
-RUN echo 'root:1234' |chpasswd
+RUN pip install jupyter
 
-RUN echo 'testuser:ehost' |chpasswd
+RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /root/.jupyter/jupyter_notebook_config.py
+# 패스워드를 root로 설정
 
-RUN chmod 4750 /bin/su 
 
-RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+##SSH install
+RUN apt-get install -y openssh-server && apt-get install vim -y && apt-get install sudo
 
 RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
 
@@ -23,38 +24,31 @@ RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
 
 RUN echo "UseLogin yes" >> /etc/ssh/sshd_config
 
-RUN echo "Port 22" >> /etc/ssh/sshd_config
+RUN useradd -ms /bin/bash testuser
 
-RUN echo "StrictModes yes" >> /etc/ssh/sshd_config
+RUN echo "testuser ALL=NOPASSWD: ALL" >> /etc/sudoers
 
+RUN echo 'root:p@ssw0rd' |chpasswd
 
-## Jupyter Notebook install
+RUN echo 'testuser:test' |chpasswd
 
-RUN apt install -y python3-pip
-# pip : 파이썬으로 작성된 패키지 소프트웨어를 관리하는 패키지 관리 시스템으로 python3-pip를 설치해줘야 함
-RUN pip install jupyter
-
-#RUN jupyter notebook --generate-config --allow-root
-
-RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /root/.jupyter/jupyter_notebook_config.py
-# 패스워드를 root로 설정
+RUN chmod 4750 /bin/su
 
 
+##port open
 EXPOSE 22
 EXPOSE 8888
 
 
-
-## ssh start
-
 RUN mkdir -p /var/run/sshd
+#추가해주지 않으면 permission denied 에러가 뜸
 
-ADD . /var/run/sshd
+ADD . /root
 
-WORKDIR /var/run/sshd
+WORKDIR /root
 
-RUN chmod 755 ssh.sh
+RUN chmod +x auto.sh
 
-RUN rm Dockerfile
+RUN rm -f Dockerfile
 
-CMD ["/bin/bash", "./ssh.sh"]
+CMD ["/bin/bash", "./auto.sh"]
