@@ -52,3 +52,9 @@ RUN chmod +x auto.sh
 RUN rm -f Dockerfile
 
 CMD ["/bin/bash", "./auto.sh"]
+
+
+## 접속 방법
+# jupyter notebook --ip=0.0.0.0 --allow-root
+#   >>root로 접속 시 비밀번호 : root
+#   >>testuser로 접속 시 비밀번호 : 토큰 값
