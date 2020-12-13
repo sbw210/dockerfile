@@ -19,6 +19,13 @@
   5) container
     - image를 실행한 상태
     - 격리된 공간에서 프로세스가 동작하는 기술
+    
+## 2. Docker 설치[centos]
+    * yum install -y yum-utils
+    * yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+    * yum install docker-ce docker-ce-cli containerd.io
 #    
 ## 2. Dockerfile 명령어
   1) FROM : base image를 지정
