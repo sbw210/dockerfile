@@ -1,0 +1,52 @@
+FROM tensorflow/tensorflow:latest-gpu-py3-jupyter
+
+RUN apt-get update -y && apt-get install -y openssh-server && apt-get install vim -y && apt-get install sudo && apt-get install net-tools
+
+RUN echo "c.NotebookApp.password = u'sha1:6a3f528eec40:6e896b6e4828f525a6e20e5411cd1c8075d68619'" >> /root/.jupyter/jupyter_notebook_config.py
+#root의 비밀번호를 root로 설정
+
+##SSH setting
+RUN sed -ri 's/PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
+#PermitRootLogin prohibit-password를 PermitRootLogin yes로 변경
+
+RUN echo "PermitRootLogin yes" >> /etc/ssh/sshd_config
+# SSH root 다이렉트 로그인 허용
+
+RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+
+RUN sed -ri 's/UsePAM yes/#UsePAM yes/g' /etc/ssh/sshd_config
+
+RUN echo "UseLogin yes" >> /etc/ssh/sshd_config
+
+RUN echo "Port 22" >> /etc/ssh/sshd_config
+
+RUN echo "StrictModes yes" >> /etc/ssh/sshd_config
+
+RUN mkdir -p /data
+RUN useradd -md /data -s /bin/bash testuser
+# -m 옵션을 명시하여 홈 디렉터리 생성 | -s /bin/bash 옵션을 명시하여 쉘 환경 설정
+RUN echo "testuser ALL=NOPASSWD: ALL" >> /etc/sudoers
+
+RUN echo 'root:p@ssw0rd' |chpasswd
+# 파이프라인 왼쪽의 표준 출력이 오른쪽의 표준 입력으로 처리됨 # root의 password를 p@ssw0rd로 변경
+RUN echo 'testuser:test' |chpasswd
+
+RUN chmod 4750 /bin/su 
+#일반 사용자 su 명령어 제한
+
+EXPOSE 22
+
+## ssh start
+
+RUN mkdir -p /var/run/sshd
+# -p 옵션을 이용하여 상위 경로도 함께 생성
+
+ADD . /root
+
+WORKDIR /root
+
+RUN chmod +x auto.sh
+
+RUN rm -f Dockerfile
+
+CMD ["/bin/bash", "./auto.sh"]
