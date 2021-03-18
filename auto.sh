@@ -5,8 +5,12 @@ source /etc/apache2/envvars
 /usr/sbin/apache2
 
 
+##nginx start
+/usr/sbin/nginx
+
+
 ##ssh start
-/usr/sbin/sshd
+/usr/sbin/sshd -D
 
 
 ##mysql start
